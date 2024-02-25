@@ -1,0 +1,132 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-btn {
+            text-align: center;
+        }
+
+        /* Change background color to gray for the submit button */
+        input.btn-primary {
+            background-color: #28a745; /* Green color for the submit button */
+            border-color: #28a745; /* Border color */
+        }
+
+        /* Hover effect for the submit button */
+        input.btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+            border-color: #218838; /* Border color on hover */
+        }
+
+        input {
+            width: 100%;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <form id="login">
+        <div class="form-group">
+            <input type="email" placeholder="Enter Email:" id="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Enter Password:" id="password" name="password" class="form-control">
+        </div>
+        <div class="form-btn">
+            <input type="submit" value="Login" name="login" class="btn btn-primary">
+        </div>
+    </form>
+    <div id="g_id_onload"
+         data-client_id="807013731058-f3h3dtqcnkk7bpb37v3opdsgbvp3mrfc.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="rectangular"
+         data-theme="outline"
+         data-text="signin_with"
+         data-size="large"
+         data-logo_alignment="left">
+    </div>
+    <div><a href="registration.html">Register</a></div>
+</div>
+</body>
+<script>
+    async function handleCredentialResponse(response){
+        const response123= JSON.parse(atob(response.credential.split('.')[1]))
+        console.log(response123)
+        var formData = new FormData();
+        formData.append("email",response123.email)
+        var xhr = new XMLHttpRequest();
+        xhr.open('Post', 'auth-google.php', true);
+        xhr.onload = function() {
+            window.location.href="/index.php";
+        };
+        xhr.send(formData);
+
+    }
+</script>
+<script type="text/javascript">
+    document.getElementById('login').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let email = $("#email").val();
+        let password = $("#password").val();
+
+        $.ajax({
+            url: "login.php",
+            method: "POST",
+            data: {email: email, password: password},
+            cache: false,
+            success: function(data){
+                window.location.href="/index.php";
+            },
+            error:function(data){
+
+            }
+
+        })
+    });
+
+</script>
+</html>
