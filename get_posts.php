@@ -2,12 +2,11 @@
 session_start();
 include('database.php');
 
-// Assuming you have a session mechanism to get the user's ID
 $user_id = isset($_SESSION['USER_ID']) ? $_SESSION['USER_ID'] : null;
 
-// Check if user is logged in
+
 if ($user_id === null) {
-    // Handle the case where the user is not logged in
+
     exit();
 }
 
